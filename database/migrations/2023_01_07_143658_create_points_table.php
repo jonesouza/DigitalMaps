@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedInteger('x');
             $table->unsignedInteger('y');
-            $table->timestamp('opened_at')->nullable(); 
-            $table->timestamp('closed_at')->nullable();
+            $table->time('opened_at')->nullable(); 
+            $table->time('closed_at')->nullable();
             $table->timestamps();
         });
     }
