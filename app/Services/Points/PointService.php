@@ -3,6 +3,7 @@
 namespace App\Services\Points;
 
 use App\Contracts\Repositories\Points\PointRepositoryContract;
+use App\DataTransferObjects\Points\PointNearData;
 use App\DataTransferObjects\Points\PointSaveData;
 
 class PointService
@@ -37,5 +38,14 @@ class PointService
     public function destroy(int $id)
     {
         $this->pointRepository->delete($id);
+    }
+
+    public function near(PointNearData $data)
+    {
+        return $this->pointRepository->findNear(
+            $data->x, 
+            $data->y, 
+            $data->distance
+        );
     }
 }

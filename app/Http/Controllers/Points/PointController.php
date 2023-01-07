@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Points;
 
-use App\DataTransferObjects\Points\PointSaveData;
 use App\Http\Controllers\Controller;
 use App\Services\Points\PointService;
+use App\Http\Requests\Points\PointNearRequest;
 use App\Http\Requests\Points\PointSaveRequest;
-use Carbon\Carbon;
+use App\DataTransferObjects\Points\PointNearData;
+use App\DataTransferObjects\Points\PointSaveData;
 
 class PointController extends Controller
 {
@@ -27,6 +28,7 @@ class PointController extends Controller
     public function store(PointSaveRequest $request)
     {
         $pointSaveData = new PointSaveData($request->validated());
+
         $point = $this->pointService->store($pointSaveData);
 
         return response()->json($point, 201);
@@ -37,6 +39,15 @@ class PointController extends Controller
         $point = $this->pointService->show($point);
 
         return response()->json($point);
+    }
+
+    public function near(PointNearRequest $request)
+    {
+        $pointNearData = new PointNearData($request->validated());
+
+        $points = $this->pointService->near($pointNearData);
+
+        return response()->json($points);
     }
 
     public function update(PointSaveRequest $request, int $point)
