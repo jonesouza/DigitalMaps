@@ -2,8 +2,9 @@
 
 namespace App\Models\Points;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Collections\Points\PointCollection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Point extends Model
 {
@@ -17,10 +18,10 @@ class Point extends Model
         'closed_at',
     ];
 
-    protected $casts = [
-        'opened_at' => 'datetime',
-        'closed_at' => 'datetime',
-    ];
+    public function newCollection(array $models = [])
+    {
+        return new PointCollection($models);
+    }
 
     
 }
