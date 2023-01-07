@@ -4,6 +4,8 @@ namespace App\Models\Points;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Collections\Points\PointCollection;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Point extends Model
@@ -23,16 +25,14 @@ class Point extends Model
         'closed_at' => 'datetime:H:i',
     ];
 
+    protected $dates = [
+		'created_at',
+		'updated_at',
+	];
+
     public function newCollection(array $models = [])
     {
         return new PointCollection($models);
-    }
-
-    public function getIsOpenedAttribute()
-    {
-        $now = now()->format('H:i');
-
-        return $this->isOpen($now);
     }
 
     public function scopeWhereNear($query, int $x, int $y, int $distance)
@@ -43,22 +43,16 @@ class Point extends Model
                     ->where('y', '<=', $y + $distance);
     }
 
-    public function isOpen($now)
+    public function isOpen(\DateTimeInterface $now)
     {
-        if ($this->opened_at === null && $this->closed_at === null) {
+        if ($this->opened_at === null && $this->closed_at === null) 
+        {
             return true;
         }
 
-        if ($this->opened_at === null && $this->closed_at !== null) {
-            return $now < $this->closed_at;
-        }
-
-        if ($this->opened_at !== null && $this->closed_at === null) {
-            return $now > $this->opened_at;
-        }
-
-        return $now > $this->opened_at && $now < $this->closed_at;
+        return isOpened($now, $this->opened_at, $this->closed_at);
     }
+    
 
     
 }

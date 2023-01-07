@@ -18,6 +18,6 @@ class PointRepository extends Repository implements PointRepositoryContract
         $points = $this->model->whereNear($x, $y, $distance)
                               ->get();
 
-        return $points->append(['is_opened']);
+        return $points;
     }
 }
