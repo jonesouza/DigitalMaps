@@ -49,6 +49,13 @@ class Handler extends ExceptionHandler
 
         });
 
+        $this->renderable(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $request) {
+            return response()->json([
+                'message' => "Resource not found"
+                ],Response::HTTP_NOT_FOUND
+            );
+        });
+
         $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
             return response()->json(
                 $e->errors(), 
@@ -57,7 +64,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (\Exception $e, $request) {
-            // dd($e);
+            dd($e);
             return response()->json([
                 'message' => "Error in the server"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
