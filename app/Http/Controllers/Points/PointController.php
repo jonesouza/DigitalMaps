@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Points\PointService;
 use App\Http\Requests\Points\PointNearRequest;
 use App\Http\Requests\Points\PointSaveRequest;
+use App\Http\Resources\Points\PointNearResource;
 use App\DataTransferObjects\Points\PointNearData;
 use App\DataTransferObjects\Points\PointSaveData;
 
@@ -47,7 +48,9 @@ class PointController extends Controller
 
         $points = $this->pointService->near($pointNearData);
 
-        return response()->json($points);
+        $pointsResource = PointNearResource::collection($points);
+
+        return response()->json($pointsResource);
     }
 
     public function update(PointSaveRequest $request, int $point)
