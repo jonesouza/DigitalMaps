@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Points;
 
+use App\Rules\PointCoordenateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PointSaveRequest extends FormRequest
@@ -25,8 +26,8 @@ class PointSaveRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'x' => 'required|numeric|min:0|max:4294967295',
-            'y' => 'required|numeric|min:0|max:4294967295',
+            'x' => ['required', new PointCoordenateRule],
+            'y' => ['required', new PointCoordenateRule],
             'opened_at' => 'sometimes|date_format:H:i',
             'closed_at' => 'sometimes|date_format:H:i',
         ];

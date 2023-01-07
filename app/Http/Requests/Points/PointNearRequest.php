@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Points;
 
+use App\Rules\PointCoordenateRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PointNearRequest extends FormRequest
@@ -24,8 +25,8 @@ class PointNearRequest extends FormRequest
     public function rules()
     {
         return [
-            'x' => 'required|numeric|min:0|max:4294967295',
-            'y' => 'required|numeric|min:0|max:4294967295',
+            'x' => ['required', new PointCoordenateRule],
+            'y' => ['required', new PointCoordenateRule],
             'distance' => 'required|numeric|min:1',
             'hour' => 'sometimes|date_format:H:i'
         ];
