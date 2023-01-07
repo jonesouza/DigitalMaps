@@ -18,4 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+route::get('points/near', [\App\Http\Controllers\Points\PointController::class, 'near']);
+
 Route::apiResource('points', \App\Http\Controllers\Points\PointController::class);
+
