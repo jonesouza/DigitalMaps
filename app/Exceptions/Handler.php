@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Response;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -45,6 +46,22 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+
         });
+
+        $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
+            return response()->json(
+                $e->errors(), 
+                Response::HTTP_BAD_REQUEST
+            );
+        });
+
+        $this->renderable(function (\Exception $e, $request) {
+            // dd($e);
+            return response()->json([
+                'message' => "Error in the server"
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        });
+
     }
 }
