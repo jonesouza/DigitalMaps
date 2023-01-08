@@ -64,7 +64,6 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (\Exception $e, $request) {
-            dd($e);
             return response()->json([
                 'message' => "Error in the server"
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
