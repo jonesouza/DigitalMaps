@@ -17,8 +17,8 @@ class PointSaveData extends DataTransferObject
     public int $y;
 
     #[Hour]
-    public string $opened_at;
+    public ?string $opened_at;
     
     #[Hour]
-    public string $closed_at;
+    public ?string $closed_at;
 }
