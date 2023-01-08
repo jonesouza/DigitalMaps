@@ -28,7 +28,7 @@ class PointNearRequest extends FormRequest
             'x' => ['required', new PointCoordenateRule],
             'y' => ['required', new PointCoordenateRule],
             'distance' => 'required|numeric|min:1',
-            'hour' => 'sometimes|date_format:H:i'
+            'hour' => 'required|date_format:H:i'
         ];
     }
 }
