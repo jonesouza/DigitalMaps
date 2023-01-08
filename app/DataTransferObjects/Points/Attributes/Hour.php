@@ -11,7 +11,9 @@ class Hour implements Validator
 {
     public function validate(mixed $value): ValidationResult
     {
-        if (!preg_match('/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
+        // dd($value);
+
+        if (!is_null($value) && !preg_match('/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/', $value)) {
             return ValidationResult::invalid("Value should be a valid hour in format HH:MM");
         }
 
