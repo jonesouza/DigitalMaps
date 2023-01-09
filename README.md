@@ -65,3 +65,7 @@ Depois basta dar os comando para instalar as dependências do php
 ``` bash
 sail composer install
 ```
+
+## Docs
+
+No diretório docs, existe um .md com um breve documentação sobre os endpoints
