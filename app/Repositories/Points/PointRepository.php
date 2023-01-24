@@ -20,4 +20,13 @@ class PointRepository extends Repository implements PointRepositoryContract
 
         return $points;
     }
+
+    public function hasInPosition(int $x, int $y)
+    {
+        $point = $this->model->where('x', $x)
+                             ->where('y', $y)
+                             ->first();
+
+        return $point;
+    }
 }

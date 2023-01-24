@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\Points\DuplicatedPointException;
 use Throwable;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -59,6 +60,13 @@ class Handler extends ExceptionHandler
         $this->renderable(function (\Illuminate\Validation\ValidationException $e, $request) {
             return response()->json(
                 $e->errors(), 
+                Response::HTTP_BAD_REQUEST
+            );
+        });
+
+        $this->renderable(function (DuplicatedPointException $e, $request) {
+            return response()->json(
+                $e->getMessage(), 
                 Response::HTTP_BAD_REQUEST
             );
         });

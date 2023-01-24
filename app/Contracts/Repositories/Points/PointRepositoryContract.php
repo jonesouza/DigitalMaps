@@ -15,4 +15,6 @@ interface PointRepositoryContract
     public function delete(int $id);
 
     public function findNear(int $x, int $y, int $distance);
+
+    public function hasInPosition(int $x, int $y);
 }

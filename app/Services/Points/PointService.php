@@ -5,6 +5,7 @@ namespace App\Services\Points;
 use App\Contracts\Repositories\Points\PointRepositoryContract;
 use App\DataTransferObjects\Points\PointNearData;
 use App\DataTransferObjects\Points\PointSaveData;
+use App\Exceptions\Points\DuplicatedPointException;
 
 class PointService
 {
@@ -22,6 +23,8 @@ class PointService
 
     public function store(PointSaveData $data)
     {
+        $this->validatePoint($data);
+
         return $this->pointRepository->create($data->toArray());
     }
 
@@ -32,6 +35,8 @@ class PointService
 
     public function update(int $id, PointSaveData $data)
     {
+        $this->validatePoint($data);
+        
         return $this->pointRepository->update($id, $data->toArray());
     }
 
@@ -47,5 +52,13 @@ class PointService
             $data->y, 
             $data->distance
         );
+    }
+
+    protected function validatePoint(PointSaveData $data)
+    {
+        if($this->pointRepository->hasInPosition($data->x, $data->y))
+        {
+            throw new DuplicatedPointException('Point already exists in this position');
+        }
     }
 }
